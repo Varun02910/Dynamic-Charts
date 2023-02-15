@@ -615,39 +615,59 @@ for i in range(start):  # taking input in library.
                             continue
                         # xlimit parameter
                         elif features == "xlimit" and (chdict["type"] in ["line", "scatter", "bar", "hist", "count"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "hist", "bar"] and chdict["lib"] == "matplotlib"):
-                            chdict["xlimit"] = tuple(input(
-                                "This feature is used to limit the value of x-axis:\n Put the xlimit as (<upper limit>,<lower limit>): "))
+                            print("For setting the value of xlimit None. Please Enter 0 in both lower and upper limit.")
+                            lower= int(input(
+                                "This feature is used to limit the value of x-axis,\n Enter the lower limit of xlimit: "))
+                            upper= int(input(
+                                "Enter the upper limit of xlimit: "))
+                            chdict["xlimit"]=(lower,upper)
                             print("your `xlimit` feature has been recorded.")
                             print("Please select the another feature.")
-                            if chdict["xlimit"]=="None":
+                            if upper==0 and lower==0:
                                 chdict["xlimit"]=None
                             continue
                         # ylimit parameter
                         elif features == "ylimit" and (chdict["type"] in ["line", "scatter", "bar", "hist", "count"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "hist", "bar", "count"] and chdict["lib"] == "matplotlib"):
-                            chdict["ylimit"] = tuple(input(
-                                "This feature is used to limit the value of y-axis:\n Put the ylimit as (<upper limit>,<lower limit>): "))
+                            print("For setting the value of ylimit None. Please Enter 0 in both lower and upper limit.")
+                            lower= int(input(
+                                "This feature is used to limit the value of y-axis,\n Enter the lower limit of ylimit: "))
+                            upper= int(input(
+                                "Enter the upper limit of ylimit: "))
+                            chdict["ylimit"]=(lower,upper)
                             print("your `ylimit` feature has been recorded.")
                             print("Please select the another feature.")
-                            if chdict["ylimit"]=="None":
+                            if upper==0 and lower==0:
                                 chdict["ylimit"]=None
                             continue
                         # xticks and xlabels parameter.
                         elif features in ["xticks", "xlabels"] and (chdict["type"] in ["line", "scatter", "bar", "hist"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "bar", "hist"] and chdict["lib"] == "matplotlib"):
-                            chdict["xticks"] = list(input(
-                                "This feature is array-like containing the list of xtick locations. Passing an empty list removes all xticks.\nPlease enter the xticks values as list: "))
+                            print("This feature is array-like containing the list of xtick locations. Passing an empty list removes all xticks.(leave all input blank.)\nPlease enter the xticks values as list: ")
+                            num=int(input("How many xtick location you want to set: "))
+                            xtick=[]
+                            for i in range(num-1):
+                                loc=int(input("Please Enter the value of "+(i+1)+" tick location:"))
+                                xtick.append(loc)
+                            chdict["xticks"]=xtick
                             print(
-                                "your `xticks` feature has been recorded.\nEnter name for the xticks location in xlabels. ")
-                            print(
-                                "Enter xlabels values-- (if you don't want to enter any value enter 'None')")
-                            chdict["xlabels"] = list(input(
-                                "This feature is array-like containing the list of xtick locations labels. Passing an empty list removes all xlabels.\nPlease enter the xlabels values as list: "))
-                            print("your `xlabels` feature has been recorded.")
-                            print("Please select the another feature.")
-                            if chdict["xticks"]=="None":
-                                chdict["xticks"]=None
-                            if chdict["xlabels"]=="None":
-                                chdict["xlabels"]=None
-                            continue
+                                "your `xticks` feature has been recorded.\nEnter the name for the xticks location in xlabels. ")
+                            str=input(
+                                "Do you want to enter the value of xlabels?[y,n]: ")
+                            print("This feature is array-like containing the list of xtick locations labels.")
+                            xlabel=[]
+                            if str=="y":
+                                for i in range (num-1):
+                                    leb=int(input("Please Enter the name of "+(i+1)+"tick"))
+                                    xlabel.append(leb)
+                                chdict["xlabels"]=xlabel
+                                print("your `xlabels` feature has been recorded.")
+                                print("Please select the another feature.")
+                                continue
+                            elif str=="n":
+                                print("Please select the another feature.")
+                                continue
+                            else:
+                                print("Invalid text: you wrote the wrong input.\n")
+                                continue
                         # col and row parameter.
                         elif features in ["col", "row"] and (chdict["type"] in ["line", "scatter", "bar", "hist"] and chdict["lib"] == "seaborn"):
                             print("Assigning a col or row variable creates a faceted figure with multiple subplots arranged across the columns or rows of the grid.\nif you want to left any feature blank write `None`")
