@@ -304,20 +304,6 @@ def mat_bar():
     plt.title(title)
     if legend == True:
         plt.legend([y], loc=(1.1, 0))
-
-    total = len(data[x].unique())
-    if total > 25:
-        index = round(total/5)
-        list = []
-        tick = 0
-        for i in range(total):
-            tick = tick
-            list.append(tick)
-            tick = tick+index
-            if tick > total:
-                break
-        ticks = list
-        plt.xticks(ticks=ticks, rotation=rotation)
     plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 
@@ -771,7 +757,7 @@ for i in range(start):  # taking input in library.
                     continue
         break
     charts()
-    print("Your plot is successfully generated and saved in your corrent folder.")
+    print("Your plot is successfully generated and saved in your current folder.")
     repeate = input("Do you want to make another plot?[y,n]:")
     if repeate == "y":
         continue
