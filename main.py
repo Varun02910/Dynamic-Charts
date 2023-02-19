@@ -220,19 +220,7 @@ def mat_line():
     plt.xlim(xlimit)
     plt.ylim(ylimit)
     plt.title(title)
-    total = len(data[x].unique())
-    if total > 25:
-        index = round(total/5)
-        list = []
-        tick = 0
-        for i in range(total):
-            tick = tick
-            list.append(tick)
-            tick = tick+index
-            if tick > total:
-                break
-        ticks = list
-        plt.xticks(ticks=ticks, rotation=rotation)
+    
     plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 
@@ -267,19 +255,7 @@ def mat_scatter():
         plt.xlim(xlimit)
         plt.ylim(ylimit)
         plt.title(title)
-        total = len(data[x].unique())
-        if total > 25:
-            index = round(total/5)
-            list = []
-            tick = 0
-            for i in range(total):
-                tick = tick
-                list.append(tick)
-                tick = tick+index
-                if tick > total:
-                    break
-            ticks = list
-            plt.xticks(ticks=ticks, rotation=rotation)
+        
         plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 
@@ -324,19 +300,7 @@ def mat_hist():
     plt.xlim(xlimit)
     plt.ylim(ylimit)
     plt.title(title)
-    total = len(data[x].unique())
-    if total > 25:
-            index = round(total/5)
-            list = []
-            tick = 0
-            for i in range(total):
-                tick = tick
-                list.append(tick)
-                tick = tick+index
-                if tick > total:
-                    break
-            ticks = list
-            plt.xticks(ticks=ticks, rotation=rotation)
+    
     plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 
