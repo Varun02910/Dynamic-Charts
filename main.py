@@ -116,7 +116,10 @@ def mat_line():
     plt.xlim(xlimit)
     plt.ylim(ylimit)
     plt.title(title)
-    plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
+    if xticks==None:
+        tick_control()
+    else:
+        plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 def mat_scatter():
     data = chdict["data"]; x = chdict["x"]; y = chdict["y"]; hue = chdict["hue"]; legend = chdict["legend"]; palette = chdict["palette"]
@@ -140,7 +143,10 @@ def mat_scatter():
     plt.xlim(xlimit)
     plt.ylim(ylimit)
     plt.title(title)
-    plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
+    if xticks==None:
+        tick_control()
+    else:
+        plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 def mat_bar():
     data = chdict["data"]; x = chdict["x"]; y = chdict["y"]; legend = chdict["legend"]; palette = chdict["palette"]; xlimit = chdict["xlimit"]
@@ -154,7 +160,10 @@ def mat_bar():
     plt.xlim(xlimit)
     plt.ylim(ylimit)
     plt.title(title)
-    plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
+    if xticks==None:
+        tick_control()
+    else:
+        plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 def mat_hist():
     data = chdict["data"]; x = chdict["x"]; palette = chdict["palette"]; xlimit = chdict["xlimit"]; ylimit = chdict["ylimit"]
@@ -165,7 +174,6 @@ def mat_hist():
     plt.xlim(xlimit)
     plt.ylim(ylimit)
     plt.title(title)
-    
     plt.xticks(ticks=xticks, labels=xlabels, rotation=rotation)
 
 def mat_count():
@@ -196,46 +204,25 @@ def charts():
     lib = chdict["lib"]
     type = chdict["type"]
     if lib == "seaborn":
-        if type == "line":
-            sns_line()
-
-        elif type == "scatter":
-            sns_scatter()
-
-        elif type == "bar":
-            sns_bar()
-
-        elif type == "hist":
-            sns_hist()
-
-        elif type == "count":
-            sns_count()
-
-        elif type == "heatmap":
-            sns_heatmap()
+        if type == "line":sns_line()
+        elif type == "scatter":sns_scatter()
+        elif type == "bar":sns_bar()
+        elif type == "hist":sns_hist()
+        elif type == "count":sns_count()
+        elif type == "heatmap":sns_heatmap()
 
     elif lib == "matplotlib":
-
-        if type == "line":
-            mat_line()
-
-        elif type == "scatter":
-            mat_scatter()
-
-        elif type == "bar":
-            mat_bar()
-
-        elif type == "hist":
-            mat_hist()
-
-        elif type == "count":
-            mat_count()
-
-        elif type == "pie":
-            mat_pie()
+        if type == "line":mat_line()
+        elif type == "scatter":mat_scatter()
+        elif type == "bar":mat_bar()
+        elif type == "hist":mat_hist()
+        elif type == "count":mat_count()
+        elif type == "pie":mat_pie()
+    
     
     plt.tight_layout()
-    plt.savefig('Plot.png')
+    figName=input("Enter the name of the file with which you want to save:")
+    plt.savefig(figName+'.png', dpi=200)
     return plt.show()
 
 start = 10
@@ -283,13 +270,17 @@ for i in range(start):
         print(
             "type = 'heatmap' can't be ploted in matplotlib library \n please change the library to seaborn")
         continue
+
+    #showing the columns present in the selected Data.
+    print("Columns that are present in the selected .csv file:")
+    print(list(chdict["data"].columns))
  # further feature selection.......
     for i in range(start):
         if chdict["type"] in ["line", "scatter", "bar", "hist", "count", "heatmap", "pie"] and chdict["lib"] in ["seaborn", "matplotlib"]:
             if chdict["type"] in ["line", "scatter", "bar", "hist", "count"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "bar", "hist", "pie","count"] and chdict["lib"] == "matplotlib":
                 # input in x parameter.
                 if chdict["type"]=="count" and chdict["lib"] in ["seaborn","matplotlib"]:
-                    chdict["x"] = input("\n Please enter the name of the column to count the no. of unique values in that column.\n if you don't want this option and want no. of values in each column please type 'None': \n")
+                    chdict["x"] = input("\nPlease enter the name of the column to count the no. of unique values in that column.\nif you don't want this option and want no. of values in each column please type 'None': \n")
                     if chdict["x"]=="None":
                         chdict["x"]=None
                 elif chdict["type"]=="pie" and chdict["lib"]=="matplotlib":
@@ -325,7 +316,7 @@ for i in range(start):
                         # title parameter
                         elif features == "title" and (chdict["type"] in ["line", "scatter", "bar", "hist", "count", "heatmap"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "bar", "hist", "count", "pie"] and chdict["lib"] == "matplotlib"):
                             chdict["title"] = input(
-                                "This feature is used to put the title of the Chart,\n Please write the chart title: ")
+                                "\nThis feature is used to put the title of the Chart,\n Please write the chart title: ")
                             print("your `title` feature has been recorded.")
                             print("Please select the another feature.")
                             if chdict["title"]=="None":
@@ -334,7 +325,7 @@ for i in range(start):
 
                         # xlimit parameter
                         elif features == "xlimit" and (chdict["type"] in ["line", "scatter", "bar", "hist", "count"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "hist", "bar"] and chdict["lib"] == "matplotlib"):
-                            print("For setting the value of xlimit None. Please Enter 0 in both lower and upper limit.")
+                            print("\nFor setting the value of xlimit None. Please Enter 0 in both lower and upper limit.")
                             lower= int(input(
                                 "This feature is used to limit the value of x-axis,\n Enter the lower limit of xlimit: "))
                             upper= int(input(
@@ -348,7 +339,7 @@ for i in range(start):
 
                         # ylimit parameter
                         elif features == "ylimit" and (chdict["type"] in ["line", "scatter", "bar", "hist", "count"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "hist", "bar", "count"] and chdict["lib"] == "matplotlib"):
-                            print("For setting the value of ylimit None. Please Enter 0 in both lower and upper limit.")
+                            print("\nFor setting the value of ylimit None. Please Enter 0 in both lower and upper limit.")
                             lower= int(input(
                                 "This feature is used to limit the value of y-axis,\n Enter the lower limit of ylimit: "))
                             upper= int(input(
@@ -362,7 +353,7 @@ for i in range(start):
 
                         # xticks and xlabels parameter.
                         elif features in ["xticks", "xlabels"] and (chdict["type"] in ["line", "scatter", "bar", "hist"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "bar", "hist"] and chdict["lib"] == "matplotlib"):
-                            print("This feature is array-like containing the list of xtick locations. Passing an empty list removes all xticks.(leave all input blank.)\nPlease enter the xticks values as list: ")
+                            print("\nThis feature is array-like containing the list of xtick locations. Passing an empty list removes all xticks.(leave all input blank.)\nPlease enter the xticks values as list: ")
                             num=int(input("How many xtick location you want to set: "))
                             xtick=[]
                             for i in range(num):
@@ -373,9 +364,9 @@ for i in range(start):
                                 "your `xticks` feature has been recorded.\nEnter the name for the xticks location in xlabels. ")
                             str=input(
                                 "Do you want to enter the value of xlabels?[y,n]: ")
-                            print("This feature is array-like containing the list of xtick locations labels.")
                             xlabel=[]
                             if str=="y":
+                                print("\nThis feature is array-like containing the list of xtick locations labels.")
                                 for i in range (num):
                                     leb=input(f"Please Enter the name of {i+1} tick: ")
                                     xlabel.append(leb)
@@ -391,7 +382,7 @@ for i in range(start):
                                 continue
                         # col and row parameter.
                         elif features in ["col", "row"] and (chdict["type"] in ["line", "scatter", "bar", "hist"] and chdict["lib"] == "seaborn"):
-                            print("Assigning a col or row variable creates a faceted figure with multiple subplots arranged across the columns or rows of the grid.\nif you want to left any feature blank write `None`")
+                            print("\nAssigning a col or row variable creates a faceted figure with multiple subplots arranged across the columns or rows of the grid.\nif you want to left any feature blank write `None`")
                             chdict["col"] = input(
                                 "Enter the column name in col: ")
                             chdict["row"] = input(
@@ -406,7 +397,7 @@ for i in range(start):
 
                         # legend parameter
                         elif features == "legend" and (chdict["type"] in ["line", "scatter", "bar", "hist"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "bar","pie"] and chdict["lib"] == "matplotlib"):
-                            legend =input("do you want to see legend ? ['True','False']: ")
+                            legend =input("\nDo you want to see legend ? ['True','False']: ")
                             if legend == "True":
                                 chdict["legend"] = True
                             elif legend == "False":
@@ -423,7 +414,7 @@ for i in range(start):
                         # rotation parameter
                         elif features == "rotation" and (chdict["type"] in ["line", "scatter", "bar", "hist", "count", "heatmap"] and chdict["lib"] == "seaborn" or chdict["type"] in ["line", "scatter", "bar", "hist", "count"] and chdict["lib"] == "matplotlib"):
                             chdict["rotation"] = int(input(
-                                "By what angle you want to rotate the labels of xaxis. \n Please enter the angle in degree: "))
+                                "\nBy what angle you want to rotate the labels of xaxis. \n Please enter the angle in degree: "))
                             print("your `rotation` feature has been recorded.")
                             print("Please select the another feature:")
                             if chdict["rotation"]=="None":
@@ -432,7 +423,7 @@ for i in range(start):
                         # annot parameter
                         elif features == "annot" and chdict["type"] == "heatmap" and chdict["lib"] == "seaborn":
                             annot = input(
-                                "do you want to see values of each correlation in heatmap ? ['True','False']: ")
+                                "\nDo you want to see values of each correlation in heatmap ? ['True','False']: ")
                             if annot == "True":
                                 chdict["annot"] = True
                             elif annot == "False":
@@ -449,7 +440,7 @@ for i in range(start):
                         # bins parameter
                         elif features == "bins" and chdict["type"] in ["hist"] and chdict["lib"] in ["seaborn", "matplotlib"]:
                             chdict["bins"] = int(
-                                input("no. of bins you want in histogram plot:"))
+                                input("\nno. of bins you want in histogram plot:"))
                             print("your `bins` feature has been recorded.")
                             print("Please select the another feature:")
                             if chdict["bins"]=="None":
@@ -458,7 +449,7 @@ for i in range(start):
                         # palette parameter
                         elif features == "palette" and chdict["type"] in ["line", "scatter", "bar", "hist", "count", "pie"] and chdict["lib"] in ["seaborn", "matplotlib"]:
                             palette = input(
-                                "Enter the color palette,\n---You can use colour name in this.---\nYou may also use ['tab10','deep','pastel','muted','bright','colorblind','dark','hls','husl','Set2','Paired','rocket']:\n")
+                                "\nEnter the color palette,\n---You can use colour name in this.---\nYou may also use ['tab10','deep','pastel','muted','bright','colorblind','dark','hls','husl','Set2','Paired','rocket']:\n")
                             if palette in ['tab10','deep','pastel','muted','bright','colorblind','dark','hls','husl','Set2','Paired','rocket']:
                                 chdict["palette"] = sns.color_palette(palette)
                                 print("your `palette` feature has been recorded.")
@@ -493,9 +484,6 @@ for i in range(start):
     charts()
     print("Your plot is successfully generated and saved in your current folder.")
     repeate = input("Do you want to make another plot?[y,n]:")
-    if repeate == "y":
-        continue
-    elif repeate == "n":
-        break
-    else:
-        break
+    if repeate == "y":continue
+    elif repeate == "n":break
+    else:break
