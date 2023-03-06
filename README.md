@@ -12,4 +12,4 @@ After all the basic requirements for graph generation ,the user will get the opt
 title, legend, xticks, xlabels, palettes, bins, etc.
 
 When all the inputs have recorded and The graph is generated successfully, the program will ask the user for the name of the image file
-before saving it. The location the .png file is in the current folder.
+before saving it. The location of the .png file is in the current folder.
